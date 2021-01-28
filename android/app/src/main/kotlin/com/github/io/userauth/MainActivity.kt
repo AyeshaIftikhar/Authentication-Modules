@@ -1,4 +1,4 @@
-package com.example.flutter_codes
+package com.github.io.userauth
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,6 @@
 name: flutter_codes
 description: A project having flutter codes of commonly used modules.
-version: 1.0.0+1
+version: 1.0.2+2
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -17,10 +17,10 @@ dependencies:
   firebase_auth: ^0.20.0+1 # for user authentication #import 'package:firebase_auth/firebase_auth.dart';
   google_sign_in: ^4.5.9 # google signin #import 'package:google_sign_in/google_sign_in.dart';
   shared_preferences: ^0.5.12+4 #import 'package:shared_preferences/shared_preferences.dart';
-  
 
 
-  dev_dependencies:
+
+dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
@@ -29,9 +29,11 @@ dependencies:
 
 flutter:
   uses-material-design: true
+
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+
   # fonts:
   #   - family: Schyler
   #     fonts:
