@@ -1,13 +1,13 @@
 {
-    "name": "flutter_codes",
-    "short_name": "flutter_codes",
+    "name": "Flutter Codes",
+    "short_name": "Flutter Codes",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
+    "background_color": "#00FFFF",
+    "theme_color": "#00FFFF",
     "description": "A new Flutter project.",
     "orientation": "portrait-primary",
-    "prefer_related_applications": false,
+    "prefer_related_applications": true,
     "icons": [
         {
             "src": "icons/Icon-192.png",
