@@ -10,7 +10,7 @@ final AuthController c = Get.find();
 class AuthService {
   // sharedpreferences to keep user loggedin. It will stored locally in a device to keep user logged in until he/she logged out himself/herself.
   SharedPreferences prefs;
-  String uid;
+  // String uid;
   // signin function
   Future<User> googleSignIn() async {
     try {
@@ -29,7 +29,7 @@ class AuthService {
           await c.auth.signInWithCredential(credential);
       // assign the user credentials to firebase user
       c.user = userCredential.user;
-      uid = c.user.uid;
+      // uid = c.user.uid;
       // if user is anonymous then check idToken
       assert(!c.user.isAnonymous);
       assert(await c.user.getIdToken() != null);
@@ -46,7 +46,9 @@ class AuthService {
       //get sharedPreferences instance
       prefs = await SharedPreferences.getInstance();
       // create a preferences string key which depends on user id.
-      prefs.setString('userId', uid);
+      // prefs.setString('userId', uid);
+      prefs.setBool('auth', true);
+      c.authSignIn.value = true;
     } catch (e) {
       print("Err: " + e.toString());
       c.message("Attention!", e.toString());
@@ -76,9 +78,12 @@ class AuthService {
     try {
       prefs = await SharedPreferences.getInstance();
       // get the value of "userId" and assigned it to a string variable userid.
-      String userid = prefs.getString('userId');
+      // String userid = prefs.getString('userId');
       // return the userid
-      return userid.toString();
+      // return userid.toString();
+      c.authSignIn.value = prefs.getBool('auth') ?? false;
+      User appuser = c.auth.currentUser;
+      return appuser;
     } catch (e) {
       print("Err: " + e.toString());
       c.message("Attention!", e.toString());
@@ -92,12 +97,13 @@ class AuthService {
       await c.auth.signOut();
       prefs = await SharedPreferences.getInstance();
       // clear the preferences from the device.
-      await prefs.remove('userId');
+      // await prefs.remove('userId');
+      await prefs.setBool('auth', false);
       // make your conditional variable to its default state
       c.authSignIn.value = false;
       // set the firebase user to null to clear its instances
       c.user = null;
-      uid = '';
+      // uid = '';
       // signed out the google account authentication flow.
       await c.googleSignIn.signOut();
       print('user signed out');
@@ -112,12 +118,13 @@ class AuthService {
     try {
       prefs = await SharedPreferences.getInstance();
       // clear the preferences from the device.
-      await prefs.remove('userId');
+      // await prefs.remove('userId');
+      await prefs.setBool('auth', false);
       // make your conditional variable to its default state
       c.authSignIn.value = false;
       // set the firebase user to null to clear its instances
       c.user = null;
-      uid = '';
+      // uid = '';
       // auth signed out
       await c.auth.signOut();
       // google account signed out

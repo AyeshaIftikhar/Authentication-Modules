@@ -22,14 +22,14 @@ class _MainpageState extends State<Mainpage> {
       //check if user is already logged in the system or not
       as.checkAutoLogin().then((value) {
         print(value);
-        if (value == 'null') {
-          print(c.authSignIn.value);
-          c.authSignIn.value = false;
-        } else if (value != null) {
-          c.authSignIn.value = true;
-        } else {
-          c.authSignIn.value = false;
-        }
+        // if (value == 'null') {
+        //   print(c.authSignIn.value);
+        //   c.authSignIn.value = false;
+        // } else if (value != null) {
+        //   c.authSignIn.value = true;
+        // } else {
+        //   c.authSignIn.value = false;
+        // }
       });
     } catch (e) {
       print("Error:" + e.toString());
@@ -41,6 +41,7 @@ class _MainpageState extends State<Mainpage> {
   @override
   void dispose() {
     super.dispose();
+    as.checkAutoLogin();
   }
 
   @override
