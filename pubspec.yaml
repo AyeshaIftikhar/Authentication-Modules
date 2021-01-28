@@ -10,8 +10,17 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.1
   get: ^3.24.0 # statemanagement #import 'package:get/get.dart';
+  animated_splash_screen: ^1.0.1+2 #import 'package:animated_splash_screen/animated_splash_screen.dart';
+  page_transition: ^1.1.7+6 #import 'package:page_transition/page_transition.dart';
+  font_awesome_flutter: ^8.11.0 #import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+  firebase_core: ^0.7.0 #use this to initiazie our application #import 'package:fireabe_core/firebase_core.dart';
+  firebase_auth: ^0.20.0+1 # for user authentication #import 'package:firebase_auth/firebase_auth.dart';
+  google_sign_in: ^4.5.9 # google signin #import 'package:google_sign_in/google_sign_in.dart';
+  shared_preferences: ^0.5.12+4 #import 'package:shared_preferences/shared_preferences.dart';
+  
 
-dev_dependencies:
+
+  dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
