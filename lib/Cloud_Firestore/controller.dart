@@ -3,4 +3,6 @@ import 'package:get/get.dart';
 
 class FirestoreController extends GetxController {
   final userCollection = FirebaseFirestore.instance.collection("Users");
+  var docId = ''.obs;
+  var photo = ''.obs;
 }

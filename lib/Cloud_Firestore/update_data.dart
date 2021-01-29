@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'controller.dart';
 
-final FirestoreController fc = Get.find();
+final FirestoreController fc =Get.put(FirestoreController());
 
 updateUrl(var link, String docid) async {
   try {
