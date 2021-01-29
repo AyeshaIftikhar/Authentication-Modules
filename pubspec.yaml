@@ -1,6 +1,6 @@
 name: flutter_codes
 description: A project having flutter codes of commonly used modules.
-version: 1.0.2+2
+version: 1.0.4+4
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -17,6 +17,16 @@ dependencies:
   firebase_auth: ^0.20.0+1 # for user authentication #import 'package:firebase_auth/firebase_auth.dart';
   google_sign_in: ^4.5.9 # google signin #import 'package:google_sign_in/google_sign_in.dart';
   shared_preferences: ^0.5.12+4 #import 'package:shared_preferences/shared_preferences.dart';
+  cloud_firestore: ^0.16.0 #import 'package:cloud_firestore/cloud_firestore.dart';
+  firebase_storage: ^7.0.0 #import 'package:firebase_storage/firebase_storage.dart';
+  permission_handler: ^5.0.1+1 #only works with android &  ios #import 'package:permission_handler/permission_handler.dart';
+  image_picker: ^0.6.7+21 # only supports android and ios #import 'package:image_picker/image_picker.dart';
+  # path: ^1.7.0 #import 'package:path/path.dart';
+  # firebase: ^8.0.0
+  # flutter_web_image_picker: ^0.0.2
+  file_picker: ^2.1.5+1
+  # path_provider: ^1.6.27
+  dio: ^3.0.10
 
 
 

@@ -51,3 +51,5 @@ script.js
 .firebaserc
 firebase.json
 .firebase/
+
+download_picture.dart

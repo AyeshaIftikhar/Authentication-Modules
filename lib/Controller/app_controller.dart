@@ -4,10 +4,6 @@ import 'package:get/get.dart';
 final AuthController ac = Get.find();
 
 class AppController extends GetxController {
-  var userid = ac.user.uid;
-  var img = ac.user.photoURL;
-  var name = ac.user.displayName;
-  var email = ac.user.email;
+  
 
-  var fsImgUrl = ''.obs;
 }

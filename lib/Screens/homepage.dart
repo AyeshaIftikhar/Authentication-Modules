@@ -1,15 +1,16 @@
-import 'package:auth_demo/Controller/app_controller.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_codes/Cloud_Firestore/update_data.dart';
 import 'package:get/get.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import '../Controller/app_controller.dart';
 import '../Auth_Service/auth_controller.dart';
 import '../Auth_Service/auth_service.dart';
 import '../Themes/theme_controller.dart';
 import '../widgets/alertbox.dart';
+import '../FirebaseStorage/add_picture.dart';
+import '../FirebaseStorage/add_picture_web.dart';
+import '../Cloud_Firestore/controller.dart';
+import '../Cloud_Firestore/select_data.dart';
 import './main_page.dart';
-import 'FirebaseStorage/android_ios_implementation.dart';
-import 'FirebaseStorage/web_implementation.dart';
 
 // authentication services controller
 final AuthController c = Get.find();
@@ -19,6 +20,7 @@ final AuthService a = AuthService();
 final ThemeController t = Get.find();
 // application controller
 final AppController controller = Get.put(AppController());
+final FirestoreController fc = Get.put(FirestoreController());
 
 class Home extends StatefulWidget {
   @override
@@ -26,51 +28,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // String _imageUrl;
-
-  getProfilePictureWeb() async {
-    try {
-      FirebaseFirestore.instance
-          .collection("UserDisplayPicture")
-          .where('User Id', isEqualTo: controller.userid)
-          .get()
-          .then((snapshot) {
-        setState(() {
-          controller.fsImgUrl.value = snapshot.docs[0].data()['Pic Link'];
-          print(controller.fsImgUrl.value);
-        });
-      });
-    } catch (e) {
-      print('URL Error:' + e.toString());
-    }
-  }
-
-  getProfilePicture() async {
-    try {
-      final ref = FirebaseStorage.instance
-          .refFromURL('gs://authentication-demo-a1eb6.appspot.com')
-          .child('displayPicture/');
-      // no need of the file extension, the name will do fine.
-      await ref.getDownloadURL().then((url) {
-        setState(() {
-          print(url);
-          controller.fsImgUrl.value = url;
-          // _imageUrl = url;
-          print(controller.fsImgUrl.value);
-        });
-      });
-    } catch (e) {
-      print("URL Exception:" + e.toString());
-    }
-  }
-
   @override
   void initState() {
-    if (GetPlatform.isWeb || GetPlatform.isDesktop) {
-      getProfilePictureWeb();
-    } else {
-      getProfilePicture();
-    }
+    selectData();
     super.initState();
   }
 
@@ -92,6 +52,10 @@ class _HomeState extends State<Home> {
                 a.signOutGoogle().then((value) {
                   /*  enroute to Main Page. 
                   Get.offAll() will clear all the instances of the previous routes/screens. It basically replace an existing route. */
+                  fc.docId.value = '';
+                  fc.photo.value = '';
+                  print(
+                      'fc.docId.value: ${fc.docId.value}\n fc.photo.value: ${fc.photo.value}');
                   Get.offAll(Mainpage());
                   c.message("Success!", "User Signed Out");
                 });
@@ -118,30 +82,57 @@ class _HomeState extends State<Home> {
                 CircleAvatar(
                   radius: 60,
                   backgroundColor: Colors.transparent,
-                  child: ClipOval(
-                    child: (controller.fsImgUrl.value != null
-                        ? Image.network(
-                            controller.fsImgUrl.value,
-                            fit: BoxFit.fill,
-                          )
-                        : Image.network(
-                            controller.img,
-                            fit: BoxFit.fill,
-                          )),
-                  ),
+                  child: Obx(() => ClipOval(
+                        child: (fc.photo.value != ''
+                            ? Image.network(
+                                fc.photo.value,
+                                width: 150.0,
+                                height: 150.0,
+                                fit: BoxFit.fill,
+                              )
+                            : Image.network(
+                                c.user.photoURL,
+                                width: 150.0,
+                                height: 150.0,
+                                fit: BoxFit.fill,
+                              )),
+                      )),
                 ),
-                IconButton(
-                  tooltip: 'Add Picture',
-                  icon: Icon(Icons.camera_alt_outlined),
-                  onPressed: () {
-                    if (GetPlatform.isDesktop || GetPlatform.isWeb) {
-                      uploadImageWeb();
-                      // imagePicker();
-                    } else {
-                      uploadImage();
-                    }
-                  },
-                )
+                Column(
+                  children: [
+                    IconButton(
+                      tooltip: 'Add Picture',
+                      icon: Icon(Icons.camera_alt_outlined),
+                      onPressed: () {
+                        try {
+                          if (GetPlatform.isDesktop || GetPlatform.isWeb) {
+                            uploadImageWeb(fc.photo.value, fc.docId.value);
+                            selectData();
+                          } else {
+                            uploadImage(fc.photo.value, fc.docId.value);
+                            selectData();
+                          }
+                        } catch (e) {
+                          print('Add Picture onPressed Error: ' + e.toString());
+                        }
+                      },
+                    ),
+                    IconButton(
+                        tooltip: 'Delete Picture',
+                        icon: Icon(Icons.delete_outlined),
+                        onPressed: () {
+                          try {
+                            updateDeletedImgUrl(fc.docId.value);
+                            fc.docId.value = '';
+                            fc.photo.value = '';
+                            // deleteImage(_docId, _imageUrl);
+                          } catch (e) {
+                            print('Delete Picture onPressed Error: ' +
+                                e.toString());
+                          }
+                        }),
+                  ],
+                ),
               ],
             ),
           ],
@@ -156,7 +147,13 @@ class _HomeState extends State<Home> {
             // size: 50,
           ),
           onPressed: () {
-            alertDialogBox(context);
+            try {
+              alertDialogBox(context, fc.docId.value);
+              fc.docId.value = '';
+              fc.photo.value = '';
+            } catch (e) {
+              print('Delete Permanently Error:' + e.toString());
+            }
           },
           tooltip: "Delete Account ",
         )
