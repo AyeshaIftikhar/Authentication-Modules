@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'controller.dart';
+import './controller.dart';
 
 final FirestoreController fc =Get.put(FirestoreController());
 

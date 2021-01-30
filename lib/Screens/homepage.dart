@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_codes/Cloud_Firestore/update_data.dart';
 import 'package:get/get.dart';
 import '../Controller/app_controller.dart';
 import '../Auth_Service/auth_controller.dart';
@@ -10,6 +9,7 @@ import '../FirebaseStorage/add_picture.dart';
 import '../FirebaseStorage/add_picture_web.dart';
 import '../Cloud_Firestore/controller.dart';
 import '../Cloud_Firestore/select_data.dart';
+import '../Cloud_Firestore/update_data.dart';
 import './main_page.dart';
 
 // authentication services controller

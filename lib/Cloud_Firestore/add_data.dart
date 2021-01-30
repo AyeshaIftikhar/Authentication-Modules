@@ -1,6 +1,6 @@
-import 'package:flutter_codes/Auth_Service/auth_controller.dart';
 import 'package:get/get.dart';
-import 'controller.dart';
+import '../Auth_Service/auth_controller.dart';
+import './controller.dart';
 
 final AuthController c = Get.find();
 final FirestoreController fc = Get.find();
