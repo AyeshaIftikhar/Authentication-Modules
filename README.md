@@ -219,7 +219,8 @@ Google Sign In is the most commonly used authentication method which is used by 
 
 We will add authentication method (google) in our project.
 
- #### Add Authentication Method
+
+#### Add Authentication Method
  - Go to your firebase console, Select Authentication from Left Pane. 
   
   ![Select Authentication](https://imgur.com/rvcPCVz.png)
@@ -329,11 +330,11 @@ You are all set-up, just place the following two commands in your __index.html__
   flutter run -d web-browser-name --web-port 51396
   ```
   
- ### Application Screenshots
+### Application Screenshots
  
   ![Splash Screen](https://i.imgur.com/ysNRzZC.png)
   ![Login Screen](https://i.imgur.com/bSYBvo9.png) ![User Profile](https://i.imgur.com/ZIBeDvb.png)
-  ![File Picker](https://i.imgur.com/nv18Chg.png)  ![Image Uploaded](https://i.imgur.com/5IhMtyy.png)
+  ![File Picker](https://i.imgur.com/nv18Chg.png)  ![Image Uploaded](https://i.imgur.com/5IhMtyy.png) 
   ![Deleted Image](https://i.imgur.com/TiaQVTN.png)
   
   
