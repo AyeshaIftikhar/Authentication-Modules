@@ -1,12 +1,12 @@
-import 'package:flutter_codes/Auth_Service/auth_controller.dart';
-import 'package:flutter_codes/Cloud_Firestore/add_data.dart';
+import 'dart:io';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:get/get.dart';
+import '../Auth_Service/auth_controller.dart';
+import '../Cloud_Firestore/add_data.dart';
 import '../Cloud_Firestore/controller.dart';
 import '../Cloud_Firestore/update_data.dart';
-import 'dart:io';
 
 final AuthController c = Get.find();
 final FirestoreController fc = Get.put(FirestoreController());

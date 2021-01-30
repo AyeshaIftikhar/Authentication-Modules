@@ -1,13 +1,13 @@
 // import 'dart:io';
 import 'dart:typed_data';
+import 'package:get/get.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:flutter_codes/Auth_Service/auth_controller.dart';
-import 'package:flutter_codes/Cloud_Firestore/add_data.dart';
-import 'package:flutter_codes/Cloud_Firestore/controller.dart';
-import 'package:flutter_codes/Cloud_Firestore/update_data.dart';
+import '../Auth_Service/auth_controller.dart';
 import '../Controller/app_controller.dart';
-import 'package:get/get.dart';
+import '../Cloud_Firestore/add_data.dart';
+import '../Cloud_Firestore/controller.dart';
+import '../Cloud_Firestore/update_data.dart';
 
 final AppController controller = Get.find();
 
