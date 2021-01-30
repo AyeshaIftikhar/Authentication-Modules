@@ -140,7 +140,9 @@ Cloud Storage is designed to help you quickly and easily store and serve user-ge
 - And if you have specific rules for sharing files with certain users, you can protect this content for users logged in with Firebase authentication.
 - Security, of course, is the first concern. All transfers are performed over a secure connection.
 - And, finally, storage, backed by Google cloud storage, scales to petabytes — that’s billions of photos — to meet your app’s needs. So you will never be out of space when you need it.
+
 #### Configure the Firebase Storage in your project
+
 - First, enable the Firebase storage in your project console [here](https://console.firebase.google.com/).
 
 ![Enable Firebase Storage](https://i.imgur.com/f75E7La.png)
