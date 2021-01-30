@@ -336,8 +336,8 @@ You are all set-up, just place the following two commands in your __index.html__
  
   ![Splash Screen](https://i.imgur.com/ysNRzZC.png)
   ![Login Screen](https://i.imgur.com/bSYBvo9.png) ![User Profile](https://i.imgur.com/ZIBeDvb.png)
-  ![File Picker](https://i.imgur.com/nv18Chg.png)  ![Image Uploaded](https://i.imgur.com/5IhMtyy.png) 
-  ![Deleted Image](https://i.imgur.com/TiaQVTN.png)
+  ![File Picker](https://i.imgur.com/nv18Chg.png) 
+ 
   
   
  Check the web application [here](https://authentication-demo-a1eb6.web.app/#/).
