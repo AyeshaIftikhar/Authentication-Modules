@@ -1,4 +1,7 @@
 # Flutter Codes
+
+[![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/#/)
+
 ### Purpose of this Repository
 
 I have made this repository for reusing the most commonly used code modules. As a developer, I know the headache of re-doing the same piece of code again and again and sometimes, you just forgot about one step and here you go, your code stops working with a long list of errors. So, here is the easiest solution I think of to make this repository and add all the working codes in it, to get it whenever they are needed.
@@ -15,17 +18,9 @@ dependencies:
 ```
    font_awesome_flutter:
 ```
-- For using __Firebase__ services, always add __Firebase Core__ package in your project. Read more about this package [here](https://pub.dev/packages/firebase_core).  To use this package just add the following line in youe `pubspec.yaml` under `dependencies:`
+- All add Internet permission in `AndroidManifest.xml` to work properly on the physical device.
 ```
-   firebase_core: 
-```
-__Note:__ connect your project to Firebase using the instruction available [here](). And do not forget to make your `main` funtcion `Asyncronized`, and add `widgetsBinding.ensureinitialized` and `firebase.initializedapp()` before the `runApp()`. The flow of `main function` will look like this:
-```
-  void main() async{
-     WidgetsFlutterBinding.ensureInitialized(); 
-     await Firebase.initializeApp();
-     runApp();
-  }
+    <uses-permission android:name="android.permission.INTERNET" />
 ```
 
 ## Animated Splash Screen
@@ -60,13 +55,152 @@ Now just replace your `home:` attribute in your main function with `AnimatedSpla
     );
   }
 ```
+# Firebase
+ Firebase gives you the tools to develop high-quality apps, grow your user base, and earn more money. Follow these instructions to get stated with firebase.
 
+- Create a new firebase project at [Firebase Console](https://console.firebase.google.com/).
+
+![Create Project](https://imgur.com/mQQOWwr.png)
+
+- Add applications to your firebase project (all the required applications i.e. android, ios, webapp, etc.). Follow these instructions to add applications on firebase.
+
+![Add Application](https://imgur.com/fX1zQcF.png)
+
+- After adding apps and connecting your firebase project with your flutter project.
+
+- For using __Firebase__ services, always add __Firebase Core__ package in your project. Read more about this package [here](https://pub.dev/packages/firebase_core).  To use this package just add the following line in youe `pubspec.yaml` under `dependencies:`
+```
+   firebase_core: 
+```
+- Add the following script in your *index.html* under <body></body> tag but before `main.dart.js` script, if you are using Firebase with Flutter Web.
+```
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+```
+__Note:__ connect your project to Firebase using the instruction available [here](https://firebase.google.com/docs/flutter/setup). And do not forget to make your `main` funtcion `Asyncronized`, and add `widgetsBinding.ensureinitialized` and `firebase.initializedapp()` before the `runApp()`. The flow of `main function` will look like this:
+```
+  void main() async{
+     WidgetsFlutterBinding.ensureInitialized(); 
+     await Firebase.initializeApp();
+     runApp();
+  }
+```
+
+## Cloud Firestore
+
+Cloud firestore is used to store data of an application. Data is stored in _Collections and Documents__. 
+
+#### Collection
+A collection points out to a certain type of data class like collection of Pet. We can consider it as a class in object oriented language.
+
+#### Documents
+A collection consists of multiple documents which stores the data fields about an entity. Each document has a unique id in a collection which can be used to refer to the data included/saved in that document. In the same manner as an id of a sql database'table.
+
+Just like an SQL database, we can perfrom different functions on data like
+- Add 
+- Update/Edit
+- Delete
+- Select 
+- Querying
+
+### Setting up Cloud Firestore
+
+- First add _cloud firestore_ package in your `pubspec.yaml` under `dependencies`:
+```
+    cloud_firestore:
+```
+Read more about the working of this package [here](https://pub.dev/packages/cloud_firestore).
+
+- In firebase project [console](https://console.firebase.google.com/). 
+- Select _Cloud Firestore_ from left pane.
+
+![Select Cloud Firestore](https://i.imgur.com/F7rxrxx.png)
+
+- Click on _create database_ button to create your database.
+
+![Create Database](https://i.imgur.com/EcIE8CC.png)
+
+- Then update the rules for adding/retrieving data, then click next and enable it.
+
+![Update Rules](https://i.imgur.com/RVR0Pff.png)
+
+- Now you can create the collections and documents manually or integrate them with your software to add data.
+For flutter web, add the following script under user <body></body> tag in `index.html`.
+
+```
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+```
+
+## Firebase Storage(Cloud Storage)
+
+Cloud Storage is designed to help you quickly and easily store and serve user-generated content without any server, such as photos and videos. 
+
+#### Features of Firebase Storage:
+
+- Firebase storage API lets you upload your users’ files to our cloud so they can be shared with anyone else!
+- And if you have specific rules for sharing files with certain users, you can protect this content for users logged in with Firebase authentication.
+- Security, of course, is the first concern. All transfers are performed over a secure connection.
+- And, finally, storage, backed by Google cloud storage, scales to petabytes — that’s billions of photos — to meet your app’s needs. So you will never be out of space when you need it.
+#### Configure the Firebase Storage in your project
+- First, enable the Firebase storage in your project console [here](https://console.firebase.google.com/).
+
+![Enable Firebase Storage](https://i.imgur.com/f75E7La.png)
+
+It should look like this. Now, you can add the folders here or can upload images directly to be accessed later.
+
+![Storage](https://i.imgur.com/CTy47sm.png)
+
+- Now, we will setup the storage rules, it depends upon the scope of application. You can setup rules in the __Rules__ tab, initially the rules are setup that only authenticated users can read and write storage data. Below is the screenshot of default rules setup by firebase.
+
+![Default Rules](https://i.imgur.com/kB9Is26.png)
+
+- Add the _Firebase Storage_ package in your `pubspec.yaml` under the `dependencies'. 
+```
+    firebase_storage:
+```
+Read more about firebase storage package [here](https://pub.dev/packages/firebase_storage).
+
+- Add this script in `index.html` under <body></body> tag.
+```
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+```
+You do not need any additional steps to make this work, but however, some of the functionalities provided by this package does not work properly. So, I have used a different approach to make this work. 
+    - I am creating a folder against each user named by their user id for easy management of data and I am adding a reference of your images in Cloud Firestore to retrieve the data because for me the function provided for retrieving the data from cloud storage does not really worked (If anyone know, how it will work. Feel free to share).
+    - For removing the access of a picture from user side, I just update the firestore document of that particular user.
+    
+I have used _Image Picker_ package for getting image on Android and iOs and _File Picker_ package for Web. On Android and iOS, we need permissions for accessing gallery. 
+    - Add External Storage Read & Write Permission for Android in `AnroidManifest.xml` file.
+    `android> app> src> main> AndroidManifes.xml`
+    ```
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    ```
+    - Add Photos permission in Info.plist for iOS.
+    `ios> Runner> Info.plist`
+    ```
+        <key>NSPhotoLibraryUsageDescription</key>
+	    <string>This app requires to save your images user gallery</string>
+    ```
+
+Add the image picker and file picker package along with permission handler package in `pubspec.yaml`.
+```
+    image_picker:
+    permission_handler:
+    file_picker:
+```
+
+We are using permission handler package because image picker package does not handle permissions by itself. Read more about image picker package [here](https://pub.dev/packages/image_picker) and file picker package [here](https://pub.dev/packages/file_picker) and permission handler package [here](https://pub.dev/packages/permission_handler). 
 
 ## Authentication Modules
 
 We are using __Firebase Authentication__ in our project so we need to add __Firebase Auth__ package in `pubspec.yaml`. Read more about this [here](https://pub.dev/packages/firebase_auth).
 ```
     firebase_auth: 
+```
+
+- Add the following script in <body></body tag of `index.html` for flutter web.
+    
+```
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
 ```
 
 ### Google Authentication
@@ -81,18 +215,10 @@ Google Sign In is the most commonly used authentication method which is used by 
 ```
  Read more about google sign in [here](https://pub.dev/packages/google_sign_in) and about shared preferences [here](https://pub.dev/packages/shared_preferences).
 
-
-
 ### Guidelines for Google Authentication Setup
-- Create a new firebase project at [Firebase Console](https://console.firebase.google.com/).
 
-![Create Project](https://imgur.com/mQQOWwr.png)
+We will add authentication method (google) in our project.
 
-- Add applications to your firebase project (all the required applications i.e. android, ios, webapp, etc.).
-
-![Add Application](https://imgur.com/fX1zQcF.png)
-
-- After adding apps and connecting your firebase project with your flutter project. Now, we will add authentication method (google) in our project.
  #### Add Authentication Method
  - Go to your firebase console, Select Authentication from Left Pane. 
   
@@ -207,6 +333,9 @@ You are all set-up, just place the following two commands in your __index.html__
  
   ![Splash Screen](https://i.imgur.com/ysNRzZC.png)
   ![Login Screen](https://i.imgur.com/bSYBvo9.png) ![User Profile](https://i.imgur.com/ZIBeDvb.png)
+  ![File Picker](https://i.imgur.com/nv18Chg.png)  ![Image Uploaded](https://i.imgur.com/5IhMtyy.png)
+  ![Deleted Image](https://i.imgur.com/TiaQVTN.png)
+  
   
  Check the web application [here](https://authentication-demo-a1eb6.web.app/#/).
  
