@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,6 +41,8 @@ class LoginScreen extends StatelessWidget {
                 icon: FaIcon(FontAwesomeIcons.google, color: t.getForeground),
                 onPressed: () {
                   try {
+                    // custom events
+                    FirebaseAnalytics().logEvent(name: 'Login',parameters:null);
                     // signed in function 
                     as.googleSignIn().then((result) {
                       if (result != null) {
