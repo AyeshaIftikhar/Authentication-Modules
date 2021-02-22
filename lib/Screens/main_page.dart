@@ -17,41 +17,31 @@ class _MainpageState extends State<Mainpage> {
   // authentication services
   final AuthService as = AuthService();
   bool login = false;
-  check() async {
+
+  bool checkLogin() {
+    bool login;
     FirebaseAuth.instance.authStateChanges().listen((User user) {
-      if (user == null) {
+      if (user.isBlank) {
         print('not logged in: ' + user.toString());
         login = false;
-        print(login);
-        // c.authSignIn.value = false;
-      } else if (user != null) {
+      } else {
         print('logged in: ' + user.toString());
         login = true;
-        // c.authSignIn.value = true;
       }
     });
+    return login;
   }
 
   @override
   void initState() {
-    try {
-      check();
-      //check if user is already logged in the system or not
-      // as.checkAutoLogin().then((value) {
-      // print(value);
-      // if (value == 'null') {
-      //   print(c.authSignIn.value);
-      //   c.authSignIn.value = false;
-      // } else if (value != null) {
-      //   c.authSignIn.value = true;
-      // } else {
-      //   c.authSignIn.value = false;
-      // }
-      // });
-    } catch (e) {
-      print("Error:" + e.toString());
-      c.message("Attention", e.toString());
-    }
+    // try {
+    //   checkLogin();
+    //   // check if user is already logged in the system or not
+    // } catch (e) {
+    //   print("Error:" + e.toString());
+    //   c.message("Attention", e.toString());  
+      
+    // }
     super.initState();
   }
 
@@ -63,6 +53,6 @@ class _MainpageState extends State<Mainpage> {
 
   @override
   Widget build(BuildContext context) {
-    return (login == false ? LoginScreen() : Home());
+    return (checkLogin() ? LoginScreen() : Home());
   }
 }

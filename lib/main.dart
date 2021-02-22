@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_codes/Screens/splash_screen.dart';
 import 'package:get/get.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'Firebase_Analytics/analytics_service.dart';
 import 'Themes/app_theme.dart';
 
@@ -13,7 +14,7 @@ void main() async {
   // FirebaseMessaging.onBackgroundMessage(cm.firebaseMessagingBackgroundHandler);
   final AnalyticsService _service = AnalyticsService();
   // OneSignal
-  //Remove this method to stop OneSignal Debugging 
+  //Remove this method to stop OneSignal Debugging
   // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   // OneSignal.shared.init('48e4de18-1433-495d-b6a0-9d2fff414892');
   // OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
@@ -21,7 +22,7 @@ void main() async {
   // await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
   runApp(
       // setup material app
-  GetMaterialApp(
+      GetMaterialApp(
     debugShowCheckedModeBanner: false,
     themeMode: ThemeMode.light,
     theme: theme,
@@ -33,3 +34,5 @@ void main() async {
     ],
   ));
 }
+
+
