@@ -3,12 +3,17 @@ buildscript {
     repositories {
         google()
         jcenter()
+        gradlePluginPortal()
     }
 
     dependencies {
-        classpath 'com.google.gms:google-services:4.3.4'
         classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.3'
+         // OneSignal-Gradle-Plugin
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.9, 0.99.99]'
+        // classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:3.15.7.pom'
+        // classpath 'com.onesignal: OneSignal:3.15.7'
     }
 }
 
@@ -17,6 +22,18 @@ allprojects {
         google()
         jcenter()
     }
+    // configurations{
+    //     all{
+    //         resolutionStratergy{
+    //             force "androidx.arch.core:core-runtime:2.0.0"
+    //             force "androidx.slidingpanelayout:slidingpanelayout:1.0.0"
+    //             force "androidx.documentfile:documentfile:1.0.0"
+    //             force "androidx.fragment:fragment:1.0.0"
+    //             force "androidx.core:core:1.0.0"
+
+    //         }
+    //     }
+    // }
 }
 
 rootProject.buildDir = '../build'

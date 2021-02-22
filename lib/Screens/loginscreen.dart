@@ -7,14 +7,15 @@ import '../Auth_Service/auth_service.dart';
 import '../Themes/theme_controller.dart';
 import './homepage.dart';
 
-// Authentication Services Controller
-final AuthController c = Get.find();
+
+
+class LoginScreen extends StatelessWidget {
+  // Authentication Services Controller
+final AuthController c = Get.put(AuthController());
 // Authentication Services
 final AuthService as = AuthService();
 // Theme Controller 
 final ThemeController t = Get.put(ThemeController());
-
-class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     t.title.value = "Flutter Codes";

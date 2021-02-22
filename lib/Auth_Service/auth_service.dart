@@ -8,6 +8,7 @@ import './auth_controller.dart';
 final AuthController c = Get.find();
 
 class AuthService {
+  User user;
   // sharedpreferences to keep user loggedin. It will stored locally in a device to keep user logged in until he/she logged out himself/herself.
   SharedPreferences prefs;
   // String uid;
@@ -28,16 +29,16 @@ class AuthService {
       UserCredential userCredential =
           await c.auth.signInWithCredential(credential);
       // assign the user credentials to firebase user
-      c.user = userCredential.user;
+      user = userCredential.user;
       // uid = c.user.uid;
       // if user is anonymous then check idToken
-      assert(!c.user.isAnonymous);
-      assert(await c.user.getIdToken() != null);
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
     } catch (e) {
       print("Error: " + e.toString());
       c.message("Attention!", e.toString());
     }
-    return c.user;
+    return c.user = user;
   }
 
 // set the preferences to keep user loggedin until he logged out himself
@@ -102,7 +103,7 @@ class AuthService {
       // make your conditional variable to its default state
       c.authSignIn.value = false;
       // set the firebase user to null to clear its instances
-      c.user = null;
+      user = null;
       // uid = '';
       // signed out the google account authentication flow.
       await c.googleSignIn.signOut();
@@ -123,7 +124,7 @@ class AuthService {
       // make your conditional variable to its default state
       c.authSignIn.value = false;
       // set the firebase user to null to clear its instances
-      c.user = null;
+      user = null;
       // uid = '';
       // auth signed out
       await c.auth.signOut();

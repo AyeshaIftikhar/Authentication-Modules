@@ -12,7 +12,16 @@ import '../Cloud_Firestore/select_data.dart';
 import '../Cloud_Firestore/update_data.dart';
 import './main_page.dart';
 
-// authentication services controller
+
+
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  // authentication services controller
 final AuthController c = Get.find();
 // authentication services
 final AuthService a = AuthService();
@@ -21,13 +30,6 @@ final ThemeController t = Get.find();
 // application controller
 final AppController controller = Get.put(AppController());
 final FirestoreController fc = Get.put(FirestoreController());
-
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
   @override
   void initState() {
     selectData();

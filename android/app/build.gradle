@@ -46,6 +46,7 @@ android {
         release {
             shrinkResources false
             minifyEnabled false
+            multiDexEnabled true
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
@@ -58,7 +59,11 @@ flutter {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:26.3.0')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.onesignal:OneSignal:3.15.7'
+    // implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
 }
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
