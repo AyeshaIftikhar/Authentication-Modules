@@ -3,7 +3,12 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import './main_page.dart';
 
-class AppSplashScreen extends StatelessWidget {
+class AppSplashScreen extends StatefulWidget {
+  @override
+  _AppSplashScreenState createState() => _AppSplashScreenState();
+}
+
+class _AppSplashScreenState extends State<AppSplashScreen> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(

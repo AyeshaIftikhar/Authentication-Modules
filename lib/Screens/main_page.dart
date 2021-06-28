@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_codes/Authentication/google_signin_controller.dart';
+import 'package:flutter_codes/Controller/app_controller.dart';
+import 'package:flutter_codes/Screens/loginscreen.dart';
+import 'package:flutter_codes/Themes/theme_controller.dart';
 import 'package:get/get.dart';
-import '../Auth_Service/auth_controller.dart';
-import '../Auth_Service/auth_service.dart';
-import '../Screens/homepage.dart';
-import './loginscreen.dart';
+import './homepage.dart';
 
 class Mainpage extends StatefulWidget {
   @override
@@ -12,47 +12,23 @@ class Mainpage extends StatefulWidget {
 }
 
 class _MainpageState extends State<Mainpage> {
-  // authentication services controller
-  final AuthController c = Get.put(AuthController());
-  // authentication services
-  final AuthService as = AuthService();
-  bool login = false;
-
-  bool checkLogin() {
-    bool login;
-    FirebaseAuth.instance.authStateChanges().listen((User user) {
-      if (user.isBlank) {
-        print('not logged in: ' + user.toString());
-        login = false;
-      } else {
-        print('logged in: ' + user.toString());
-        login = true;
-      }
-    });
-    return login;
-  }
-
+  // ignore: unused_field
+  final ThemeController _theme = Get.put(ThemeController());
+  final AppController _controller = Get.put(AppController());
+  final GoogleSigninController _googleSigninController =
+      Get.put(GoogleSigninController());
   @override
   void initState() {
-    // try {
-    //   checkLogin();
-    //   // check if user is already logged in the system or not
-    // } catch (e) {
-    //   print("Error:" + e.toString());
-    //   c.message("Attention", e.toString());  
-      
-    // }
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    as.checkAutoLogin();
+    _googleSigninController.checkUserLoginStatus().then((value) {
+      print(_controller.isUserLogin.value);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return (checkLogin() ? LoginScreen() : Home());
+    return Obx(() => Container(
+          child: _controller.isUserLogin.value ? Home() : LoginScreen(),
+        ));
   }
 }

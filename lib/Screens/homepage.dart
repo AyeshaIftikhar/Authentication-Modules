@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codes/Authentication/google_signin_controller.dart';
+import 'package:flutter_codes/Cloud_Firestore/cloud_firestore_service.dart';
+import 'package:flutter_codes/FirebaseStorage/add_picture.dart';
 import 'package:get/get.dart';
 import '../Controller/app_controller.dart';
-import '../Auth_Service/auth_controller.dart';
-import '../Auth_Service/auth_service.dart';
 import '../Themes/theme_controller.dart';
 import '../widgets/alertbox.dart';
-import '../FirebaseStorage/add_picture.dart';
-import '../FirebaseStorage/add_picture_web.dart';
-import '../Cloud_Firestore/controller.dart';
-import '../Cloud_Firestore/select_data.dart';
-import '../Cloud_Firestore/update_data.dart';
-import './main_page.dart';
-
-
-
 
 class Home extends StatefulWidget {
   @override
@@ -21,119 +13,87 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // authentication services controller
-final AuthController c = Get.find();
-// authentication services
-final AuthService a = AuthService();
-// theme controller
-final ThemeController t = Get.find();
-// application controller
-final AppController controller = Get.put(AppController());
-final FirestoreController fc = Get.put(FirestoreController());
+  final ThemeController _theme = Get.find();
+  final AppController _controller = Get.find();
+  final GoogleSigninController _googleController = Get.find();
   @override
   void initState() {
-    selectData();
+    CloudFirestoreService().selectData().then((value) {
+      print(_controller.docid.value);
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // title of the screen
-    t.title.value = "Welcome:" + c.user.displayName;
+    _theme.title.value = "Welcome: ${_controller.username.value}";
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.title.value, style: TextStyle(color: t.getForeground)),
+        title: Text(_theme.title.value,
+            style: TextStyle(color: _theme.getForeground)),
         centerTitle: true,
         actions: [
-          // Logout Icon button
           IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              try {
-                // calling the logout funtion
-                a.signOutGoogle().then((value) {
-                  /*  enroute to Main Page. 
-                  Get.offAll() will clear all the instances of the previous routes/screens. It basically replace an existing route. */
-                  fc.docId.value = '';
-                  fc.photo.value = '';
-                  print(
-                      'fc.docId.value: ${fc.docId.value}\n fc.photo.value: ${fc.photo.value}');
-                  Get.offAll(Mainpage());
-                  c.message("Success!", "User Signed Out");
-                });
-              } catch (e) {
-                print(" Err: " + e.toString());
-                c.message("Attention", e.toString());
-              }
-            },
-          ),
-          IconButton(
-            icon: Icon(t.b_icon.value),
-            onPressed: () => t.changeMode(),
+            icon: Icon(_theme.b_icon.value),
+            onPressed: () => _theme.changeMode(),
           ),
         ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20.0),
-        child: Wrap(
-          spacing: 8.0,
-          runSpacing: 5.0,
+        child: Row(
           children: [
-            Row(
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: Colors.transparent,
+              child: ClipOval(
+                child: Obx(() => Image.network(
+                      _controller.photoUrl.value,
+                      width: 150.0,
+                      height: 150.0,
+                      fit: BoxFit.fill,
+                    )),
+              ),
+            ),
+            Column(
               children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Colors.transparent,
-                  child: Obx(() => ClipOval(
-                        child: (fc.photo.value != ''
-                            ? Image.network(
-                                fc.photo.value,
-                                width: 150.0,
-                                height: 150.0,
-                                fit: BoxFit.fill,
-                              )
-                            : Image.network(
-                                c.user.photoURL,
-                                width: 150.0,
-                                height: 150.0,
-                                fit: BoxFit.fill,
-                              )),
-                      )),
+                IconButton(
+                  tooltip: 'Add Picture',
+                  icon: Icon(Icons.camera_alt_outlined),
+                  onPressed: () {
+                    try {
+                      FirebaseStorageService()
+                          .uploadImage(_controller.docid.value);
+                    } catch (e) {
+                      print('Add Picture onPressed Error: ' + e.toString());
+                    }
+                  },
                 ),
-                Column(
-                  children: [
-                    IconButton(
-                      tooltip: 'Add Picture',
-                      icon: Icon(Icons.camera_alt_outlined),
-                      onPressed: () {
-                        try {
-                          if (GetPlatform.isDesktop || GetPlatform.isWeb) {
-                            uploadImageWeb(fc.photo.value, fc.docId.value);
-                            selectData();
-                          } else {
-                            uploadImage(fc.photo.value, fc.docId.value);
-                            selectData();
-                          }
-                        } catch (e) {
-                          print('Add Picture onPressed Error: ' + e.toString());
-                        }
-                      },
-                    ),
-                    IconButton(
-                        tooltip: 'Delete Picture',
-                        icon: Icon(Icons.delete_outlined),
-                        onPressed: () {
-                          try {
-                            updateDeletedImgUrl(fc.docId.value);
-                            fc.docId.value = '';
-                            fc.photo.value = '';
-                            // deleteImage(_docId, _imageUrl);
-                          } catch (e) {
-                            print('Delete Picture onPressed Error: ' +
-                                e.toString());
-                          }
-                        }),
-                  ],
+                IconButton(
+                    tooltip: 'Delete Picture',
+                    icon: Icon(Icons.delete_outlined),
+                    onPressed: () {
+                      try {
+                        CloudFirestoreService()
+                            .updateDeleteUrl(docid: _controller.docid.value);
+                      } catch (e) {
+                        print(
+                            'Delete Picture onPressed Error: ' + e.toString());
+                      }
+                    }),
+              ],
+            ),
+            Column(
+              children: [
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 28.0, top: 10),
+                      child: Text(_controller.username.value),
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(left: 28.0, top: 10),
+                  child: Text(_controller.email.value),
                 ),
               ],
             ),
@@ -141,18 +101,31 @@ final FirestoreController fc = Get.put(FirestoreController());
         ),
       ),
       persistentFooterButtons: [
-        // Delete Account Button
         IconButton(
           icon: Icon(
-            Icons.delete_forever_outlined,
-            color: t.getBackground,
-            // size: 50,
+            Icons.logout,
+            color: _theme.getBackground,
           ),
           onPressed: () {
             try {
-              alertDialogBox(context, fc.docId.value);
-              fc.docId.value = '';
-              fc.photo.value = '';
+              _googleController.userSignOut().then((value) {});
+            } catch (e) {
+              _controller.message(
+                  title: 'Something went wrong!',
+                  body: 'Please try again later.');
+            }
+          },
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.delete_forever_outlined,
+            color: _theme.getBackground,
+          ),
+          onPressed: () {
+            try {
+              alertDialogBox(context, _controller.docid.value);
+              _controller.docid.value = '';
+              _controller.photoUrl.value = '';
             } catch (e) {
               print('Delete Permanently Error:' + e.toString());
             }

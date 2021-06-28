@@ -9,25 +9,22 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.1
-  get: ^3.25.0 # statemanagement #import 'package:get/get.dart';
-  animated_splash_screen: ^1.0.1+2 #import 'package:animated_splash_screen/animated_splash_screen.dart';
-  page_transition: ^1.1.7+6 #import 'package:page_transition/page_transition.dart';
-  font_awesome_flutter: ^8.11.0 #import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-  firebase_core: ^0.7.0 #use this to initiazie our application #import 'package:fireabe_core/firebase_core.dart';
-  firebase_auth: ^0.20.0+1 # for user authentication #import 'package:firebase_auth/firebase_auth.dart';
-  google_sign_in: ^4.5.9 # google signin #import 'package:google_sign_in/google_sign_in.dart';
-  shared_preferences: ^0.5.12+4 #import 'package:shared_preferences/shared_preferences.dart';
-  cloud_firestore: ^0.16.0 #import 'package:cloud_firestore/cloud_firestore.dart';
-  firebase_storage: ^7.0.0 #import 'package:firebase_storage/firebase_storage.dart';
-  permission_handler: ^5.0.1+1 #only works with android &  ios #import 'package:permission_handler/permission_handler.dart';
-  image_picker: ^0.6.7+21 # only supports android and ios #import 'package:image_picker/image_picker.dart';
-  # path: ^1.7.0 #import 'package:path/path.dart';
-  file_picker: ^2.1.5+1
+  get: ^3.25.0 
+  animated_splash_screen: ^1.0.1+2 
+  page_transition: ^1.1.7+6 
+  font_awesome_flutter: ^8.11.0 
+  firebase_core: ^1.3.0 
+  firebase_auth: ^1.4.1 
+  google_sign_in: ^5.0.4
+  shared_preferences: ^2.0.6
+  cloud_firestore: ^2.2.2 
+  firebase_storage: ^8.1.3 
+  image_picker: ^0.8.1+1 
   firebase_analytics: ^7.0.1
   get_it: ^5.0.6
-  # firebase_crashlytics: ^0.4.0+1
-  # firebase_messaging: ^8.0.0-dev.14
-  onesignal_flutter: ^2.6.2
+  # firebase_messaging: 
+  # # onesignal_flutter: ^2.6.2
+  # overlay_support: ^1.2.0
 
 
 
