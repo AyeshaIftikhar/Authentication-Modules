@@ -1,125 +1,82 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_codes/Controller/app_controller.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import '../Auth_Service/auth_controller.dart';
-import '../Cloud_Firestore/add_data.dart';
-import '../Cloud_Firestore/controller.dart';
-import '../Cloud_Firestore/update_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../Cloud_Firestore/cloud_firestore_service.dart';
 
-final AuthController c = Get.find();
-final FirestoreController fc = Get.put(FirestoreController());
+class FirebaseStorageService {
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  final AppController _appController = Get.find();
+  ImagePicker picker = ImagePicker();
+  var _image;
+  var pickedFile;
 
-uploadImage(String cUrl, String docid) async {
-  print('Current Url: $cUrl');
-  print("Current Doc ID: $docid");
-  final _imgPicker = ImagePicker();
-  PickedFile _image; // used while working with image_picker
-
-  // get permissions
-  await Permission.photos.request();
-  var permissionStatus = await Permission.photos.status;
-
-  // if granted then this module will work
-  try {
-    if (permissionStatus.isGranted) {
-      try {
-        _image = await _imgPicker.getImage(source: ImageSource.gallery);
-        if (_image != null) {
-          uploadFirebase(_image, cUrl, docid).then((value) {
-            // print("Returned Link: $value");
-            // return value;
-          });
-        } else {
-          Get.snackbar("Pleasa select an image to proceed!", "");
-          // return '';
-        }
-      } catch (e) {
-        print('Err:' + e.toString());
-      }
-    } else if (permissionStatus.isDenied) {
-      openAppSettings();
-      // return '';
-    } else if (permissionStatus.isPermanentlyDenied) {
-      openAppSettings();
-      // return '';
-    } else {
-      Get.snackbar("Attention",
-          "Permission is not granted, grant the permission first!");
-      // return '';
-    }
-  } catch (e) {
-    print('Image Picker Exception:' + e.toString());
-  }
-  // return '';
-}
-
-// upload picture to firebase
-uploadFirebase(var image, String curl, String docid) async {
-  var file = File(image.path);
-  if (image != null) {
+  Future uploadImage(String docid) async {
+    print("Current Doc ID: $docid");
     try {
-      firebase_storage.SettableMetadata metadata =
-          firebase_storage.SettableMetadata(
-        cacheControl: 'max-age=60',
-        customMetadata: <String, String>{
-          'userId': c.user.uid,
-        },
+      pickedFile = await picker.getImage(
+        source: ImageSource.gallery,
+        imageQuality: 100,
       );
-      firebase_storage.Reference reference = firebase_storage
-          .FirebaseStorage.instance
-          .ref()
-          .child(c.user.uid)
-          .child(c.user.displayName);
-      firebase_storage.UploadTask uploadTask =
-          reference.putFile(file, metadata);
-      var taskSnapshot = await uploadTask;
-      if (taskSnapshot != null) {
-        var link = await taskSnapshot.ref.getDownloadURL();
-        print('Image Link: $link');
-        if (curl != null) {
-          updateUrl(link, docid);
-          fc.photo.value = link;
-          // return link.toString();
+      if (pickedFile != null) {
+        print(pickedFile.path);
+        _image = File(pickedFile.path);
+        print(_image);
+      } else {
+        print("No file Selected");
+      }
+    } catch (e) {
+      print("Image Picker Exception: $e");
+      Get.snackbar("Something went wrong!", "Please try again later.");
+    }
+    // upload to firebase
+    try {
+      if (_image != null) {
+        SettableMetadata metadata = SettableMetadata(
+          contentType: 'image',
+          cacheControl: 'max-age=60',
+          customMetadata: <String, String>{
+            'userid': _appController.userid.value,
+            'username': _appController.username.value,
+          },
+        );
+        Reference _storageRef = storage.ref().child(
+            'ProfilePicture/${_appController.userid.value}/${_appController.username.value}_profilepicture');
+        UploadTask _uploadTask;
+        if (GetPlatform.isWeb) {
+          _uploadTask =
+              _storageRef.putData(await pickedFile.readAsBytes(), metadata);
         } else {
-          addData(link);
-          fc.photo.value = link;
-          // return link.toString();
+          _uploadTask = _storageRef.putFile(_image, metadata);
+        }
+        TaskSnapshot _tasksnapshot = await _uploadTask;
+        // ignore: unused_local_variable
+        var link;
+        if (_uploadTask != null) {
+          link = await _tasksnapshot.ref.getDownloadURL().then((fileUrl) async {
+            print("Uploaded Image Link: $fileUrl");
+            CloudFirestoreService()
+                .updateUrl(link: fileUrl, docid: docid)
+                .then((value) async {
+              // if (value) {
+                _appController.photoUrl.value = fileUrl;
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.setString('photoURL', _appController.photoUrl.value);
+                _appController.message(
+                    title: "Profile Picture Updated!",
+                    body:
+                        "Your profile picture has been updated successfully.");
+                return true;
+              // }
+            });
+          });
         }
       }
     } catch (e) {
-      print('Firebase Storage Exception:' + e.toString());
+      print('FirebaseStorage Exception: $e');
+      return false;
     }
   }
-  // return '';
 }
-
-// firebase_storage.SettableMetadata metadata =
-//     firebase_storage.SettableMetadata(
-//   cacheControl: 'max-age=60',
-//   customMetadata: <String, String>{
-//     'userId': c.user.uid,
-//   },
-// );
-// firebase_storage.Reference reference =_fbStorage.ref().child('displayPicture').child(name);
-// firebase_storage.UploadTask uploadTask = reference.putFile(file);
-// reference.putFile(file, metadata);
-// var taskSnapshot = await uploadTask;
-
-// Future<void> getMetadataExample() async {
-//   try {
-//     firebase_storage.FullMetadata metadata = await firebase_storage
-//         .FirebaseStorage.instance
-//         .refFromURL('gs://authentication-demo-a1eb6.appspot.com')
-//         .child('displayPicture')
-//         .getMetadata();
-//     // setState(() {
-//     // As set in previous example.
-//     print(metadata.customMetadata['userId']);
-//   } catch (e) {
-//     print("Metadata Exception:" + e.toString());
-//   }
-//   // controller.fsImgUrl.value = metadata.customMetadata['userId'];
-//   // });
-// }
