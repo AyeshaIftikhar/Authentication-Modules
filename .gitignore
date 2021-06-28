@@ -52,6 +52,7 @@ script.js
 firebase.json
 .firebase/
 Cloud_Messaging/
+lib/FirebaseCloudMessaging/
 
 download_picture.dart
 flutter codes.txt
