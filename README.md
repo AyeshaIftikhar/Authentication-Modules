@@ -2,7 +2,7 @@
 
 [![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/#/)
 ## Quick Links 
-[![Purpose](https://img.shields.io/badge/FLUTTER-Purpose_of_the_Repository-64DD17)](#Purpose-of-the-Repository)
+[![Purpose](https://img.shields.io/badge/FLUTTER-Purpose_of_the_Repository-64DD17)](###Purpose-of-the-Repository)
 
 ### Purpose of this Repository
 
