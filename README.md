@@ -1,22 +1,22 @@
 # Flutter Codes
 
-[![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/#/) [![Documentation](https://img.shields.io/badge/Documentation-00FFFF?logo=GitHub-FFFFFF)](https://www.ayeshaiftikhar.io/Flutter-Codes) [![Detailed Documentation](https://img.shields.io/badge/Detailed_Documentation-00FFFF?logo=GitHub-ffffff)]()  
+[![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/#/) [![Documentation](https://img.shields.io/badge/Documentation-00FFFF?logo=Github&logoColor=FFFFFF)](https://www.ayeshaiftikhar.github.io/Flutter-Codes) [![Detailed Documentation](https://img.shields.io/badge/Detailed_Documentation-00FFFF?logo=Github&logoColor=ffffff)]()  
 ## Quick Links 
-[![Purpose](https://img.shields.io/badge/FLUTTER-Purpose_of_the_Repository-00FFFF)](#Purpose-of-the-Repository) 
+[![Purpose](https://img.shields.io/badge/FLUTTER-Purpose_of_the_Repository-00FFFF)](#purpose-of-the-repository) 
 
-[![Generic Packages](https://img.shields.io/badge/FLUTTER-Generic_Packages_being_User-00FFFF)](#Some-Generic-Flutter-Packages,-I-have-Used) 
+[![Generic Packages](https://img.shields.io/badge/FLUTTER-Generic_Packages_being_Used-00FFFF)](#some-generic-flutter-packages,-i-have-used) 
 
-[![Splash Screen](https://img.shields.io/badge/FLUTTER-Animated_Splash_Screen-00FFFF)](#Animated-Splash-Screen) 
+[![Splash Screen](https://img.shields.io/badge/FLUTTER-Animated_Splash_Screen-00FFFF)](#animated-splash-screen) 
 
-[![Firebase](https://img.shields.io/badge/FLUTTER-Firebase-00FFFF)](#Firebase) 
+[![Firebase](https://img.shields.io/badge/FLUTTER-Firebase-00FFFF)](#firebase) 
 
-[![Cloud Firestore](https://img.shields.io/badge/FLUTTER-Cloud_Firestore-00FFFF)](#Cloud-Firestore) [![Collection](https://img.shields.io/badge/Cloud_Firestore-Collection-00FFFF)](#Collection) [![Documents](https://img.shields.io/badge/Cloud_Firestore-Documents-00FFFF)](#Documents) [![Setting up cloud firestore](https://img.shields.io/badge/Cloud_Firestore-Setup-00FFFF)](#Setting-up-Cloud-Firestore) 
+[![Cloud Firestore](https://img.shields.io/badge/FLUTTER-Cloud_Firestore-00FFFF)](#cloud-firestore) [![Collection](https://img.shields.io/badge/Cloud_Firestore-Collection-00FFFF)](#collection) [![Documents](https://img.shields.io/badge/Cloud_Firestore-Documents-00FFFF)](#documents) [![Setting up cloud firestore](https://img.shields.io/badge/Cloud_Firestore-Setup-00FFFF)](#setting-up-cloud-firestore) 
 
-[![Firebase Storage](https://img.shields.io/badge/FLUTTER-Firebase_Storage-00FFFF)](#Firebase-Storage) [![Features](https://img.shields.io/badge/Firebase_Storage-Features-00FFFF)](#Features-of-Firebase-Storage:) [![Configuration](https://img.shields.io/badge/Firebase_Storage-Configuration-00FFFF)](#Configure-the-Firebase-Storage-in-your-project) 
+[![Firebase Storage](https://img.shields.io/badge/FLUTTER-Firebase_Storage-00FFFF)](#firebase-storage) [![Features](https://img.shields.io/badge/Firebase_Storage-Features-00FFFF)](#features-of-firebase-storage:) [![Configuration](https://img.shields.io/badge/Firebase_Storage-Configuration-00FFFF)](#configure-the-firebase-storage-in-your-project) 
 
-[![Authentication](https://img.shields.io/badge/FLUTTER-Firebase_Authentication-00FFFF)](#Authentication-Modules) 
+[![Authentication](https://img.shields.io/badge/FLUTTER-Firebase_Authentication-00FFFF)](#authentication-modules) 
 
-[![Google Authentication](https://img.shields.io/badge/Firebase-Google_Authentication-00FFFF)](#Google-Authentication)  
+[![Google Authentication](https://img.shields.io/badge/Firebase-Google_Authentication-00FFFF)](#google-authentication)  [![Google Authentication Setup](https://img.shields.io/badge/Firebase-Google_Authentication_Setup-00FFFF)](#guidelines-for-google-authentication-setup) 
 
 
 ### Purpose of this Repository
@@ -40,6 +40,9 @@ dependencies:
     <uses-permission android:name="android.permission.INTERNET" />
 ```
 
+
+[![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes)
+
 ## Animated Splash Screen
 
 [![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/#/)
@@ -50,7 +53,7 @@ Splash Screens made your applications look more professional and I have created 
      page_transition:
 ```
 Create a new class named `AnimatedSplashScreen` add the following code in that class like this:
-```
+```dart
   return AnimatedSplashScreen(
       duration: 7,
       splash: "[n]https://i.imgur.com/p3i6j7o.png",
@@ -63,7 +66,7 @@ Create a new class named `AnimatedSplashScreen` add the following code in that c
 - __Note:__ if your are using a network image you have to follow this format: `"[n]YourURL.png"`.
 
 Now just replace your `home:` attribute in your main function with `AnimatedSplashScreen()`
-```
+```dart
   void main(){
     runApp(
       MaterialApp(
@@ -72,6 +75,9 @@ Now just replace your `home:` attribute in your main function with `AnimatedSpla
     );
   }
 ```
+
+[![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes)
+
 # Firebase
  Firebase gives you the tools to develop high-quality apps, grow your user base, and earn more money. Follow these instructions to get stated with firebase.
 
@@ -94,13 +100,15 @@ Now just replace your `home:` attribute in your main function with `AnimatedSpla
     <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
 ```
 __Note:__ connect your project to Firebase using the instruction available [here](https://firebase.google.com/docs/flutter/setup). And do not forget to make your `main` funtcion `Asyncronized`, and add `widgetsBinding.ensureinitialized` and `firebase.initializedapp()` before the `runApp()`. The flow of `main function` will look like this:
-```
+```dart
   void main() async{
      WidgetsFlutterBinding.ensureInitialized(); 
      await Firebase.initializeApp();
      runApp();
   }
 ```
+
+[![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes)
 
 ## Cloud Firestore
 
@@ -144,10 +152,12 @@ Read more about the working of this package [here](https://pub.dev/packages/clou
 For flutter web, add the following script under user <body></body> tag in `index.html`.
 
 ```
-    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
 ```
 
-## Firebase Storage(Cloud Storage)
+[![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes)
+
+## Firebase Storage
 
 Cloud Storage is designed to help you quickly and easily store and serve user-generated content without any server, such as photos and videos. 
 
@@ -180,7 +190,7 @@ Read more about firebase storage package [here](https://pub.dev/packages/firebas
 
 - Add this script in `index.html` under <body></body> tag.
 ```
-    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
 ```
 You do not need any additional steps to make this work, but however, some of the functionalities provided by this package does not work properly. So, I have used a different approach to make this work. 
     - I am creating a folder against each user named by their user id for easy management of data and I am adding a reference of your images in Cloud Firestore to retrieve the data because for me the function provided for retrieving the data from cloud storage does not really worked (If anyone know, how it will work. Feel free to share).
@@ -206,6 +216,8 @@ Add the image picker and file picker package along with permission handler packa
 ```
 
 We are using permission handler package because image picker package does not handle permissions by itself. Read more about image picker package [here](https://pub.dev/packages/image_picker). 
+
+[![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes)
 
 ## Authentication Modules
 
@@ -347,6 +359,8 @@ You are all set-up, just place the following two commands in your __index.html__
   flutter run -d web-browser-name --web-port 51396
   ```
   
+  [![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes)
+  
 ### Application Screenshots
  
   ![Splash Screen](https://i.imgur.com/ysNRzZC.png)
@@ -354,6 +368,8 @@ You are all set-up, just place the following two commands in your __index.html__
   ![File Picker](https://i.imgur.com/nv18Chg.png) 
  
   
+  
+  [![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes)
   
  Check the web application [here](https://authentication-demo-a1eb6.web.app/#/).
  
