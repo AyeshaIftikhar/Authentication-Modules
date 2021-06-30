@@ -1,8 +1,9 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_codes/Authentication/google_signin_controller.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../Authentication/facebook_signin.dart';
+import '../Authentication/google_signin_controller.dart';
 import '../Themes/theme_controller.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -39,30 +40,49 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           ElevatedButton.icon(
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(EdgeInsets.all(20.0)),
+            ),
+            icon: FaIcon(FontAwesomeIcons.google, color: _theme.getForeground),
+            onPressed: () {
+              try {
+                // custom events
+                FirebaseAnalytics().logEvent(name: 'Login', parameters: null);
+                // signed in function
+                _googleSigninController.userSignIn();
+              } catch (e) {
+                print('Error: ' + e.toString());
+              }
+            },
+            label: Text(
+              'Sign in via Google',
+              style: TextStyle(color: _theme.getForeground),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: ElevatedButton.icon(
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(EdgeInsets.all(20.0)),
               ),
-              icon:
-                  FaIcon(FontAwesomeIcons.google, color: _theme.getForeground),
+              icon: FaIcon(FontAwesomeIcons.facebook,
+                  color: _theme.getForeground),
               onPressed: () {
                 try {
                   // custom events
-                  FirebaseAnalytics().logEvent(name: 'Login', parameters: null);
-                  // signed in function
-                  _googleSigninController.userSignIn().then((value) {
-                    // print(value);
-                    // if (value) {
-                    //   Get.toNamed('/Home');
-                    // }
-                  });
+                  FirebaseAnalytics()
+                      .logEvent(name: 'Facebook_Login', parameters: null);
+                  FacebookLoginService().userFacebookLogin();
                 } catch (e) {
                   print('Error: ' + e.toString());
                 }
               },
               label: Text(
-                'Sign in via Google',
+                'Sign in via Facebook',
                 style: TextStyle(color: _theme.getForeground),
-              )),
+              ),
+            ),
+          ),
         ],
       )),
     );

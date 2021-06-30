@@ -53,7 +53,10 @@ firebase.json
 .firebase/
 Cloud_Messaging/
 lib/FirebaseCloudMessaging/
+lib/Constants/configuration_ids.dart
 
 download_picture.dart
 flutter codes.txt
+
+/android/app/src/main/res/values/strings.xml
 

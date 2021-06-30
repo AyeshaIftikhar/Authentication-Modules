@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_codes/Authentication/google_signin_controller.dart';
-import 'package:flutter_codes/Cloud_Firestore/cloud_firestore_service.dart';
-import 'package:flutter_codes/FirebaseStorage/add_picture.dart';
 import 'package:get/get.dart';
 import '../Controller/app_controller.dart';
 import '../Themes/theme_controller.dart';
+import '../Authentication/google_signin_controller.dart';
+import '../Cloud_Firestore/cloud_firestore_service.dart';
+import '../FirebaseStorage/add_picture.dart';
 import '../widgets/alertbox.dart';
 
 class Home extends StatefulWidget {
@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(10.0),
         child: Row(
           children: [
             CircleAvatar(
@@ -88,12 +88,19 @@ class _HomeState extends State<Home> {
                 Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 28.0, top: 10),
-                      child: Text(_controller.username.value),
+                      padding: const EdgeInsets.only(left: 0.0, top: 10),
+                      child: Text(
+                        _controller.username.value,
+                        style: TextStyle(fontSize: 15),
+                      ),
                     )),
                 Padding(
-                  padding: const EdgeInsets.only(left: 28.0, top: 10),
-                  child: Text(_controller.email.value),
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    _controller.email.value,  
+                  style: TextStyle(
+                    fontSize: GetPlatform.isMobile? 12 : 15,
+                  ),),
                 ),
               ],
             ),

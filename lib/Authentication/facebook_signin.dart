@@ -1,24 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Cloud_Firestore/cloud_firestore_service.dart';
 import '../Controller/app_controller.dart';
 
-class GoogleSigninController extends GetxController {
+class FacebookLoginService {
   final AppController _app = Get.find();
-  Future userSignIn() async {
+  Future userFacebookLogin() async {
     try {
-      signInWithGoogle().then((userCredentials) async {
-        _app.user.value = userCredentials.user;
+      signInWithFacebook().then((credentials) async {
+        _app.user.value = credentials.user;
         _app.isUserLogin.value = true;
-        _app.profileMode.value = 1;
-        _app.userid.value = userCredentials.user.uid;
-        _app.username.value = userCredentials.user.displayName;
-        _app.email.value = userCredentials.user.email;
-        _app.photoUrl.value = userCredentials.user.photoURL;
+        _app.profileMode.value = 2;
+        _app.userid.value = credentials.user.uid;
+        _app.username.value = credentials.user.displayName;
+        _app.email.value = credentials.user.email;
+        _app.photoUrl.value = credentials.user.photoURL;
         CloudFirestoreService()
-            .addUser(docid: userCredentials.user.uid, type: 'Google Sign in');
+            .addUser(docid: credentials.user.uid, type: 'Facebook Login');
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isUserLogin', true);
         await prefs.setString('userid', _app.userid.value);
@@ -26,41 +26,54 @@ class GoogleSigninController extends GetxController {
         await prefs.setString('displayName', _app.username.value);
         await prefs.setString('email', _app.email.value);
         await prefs.setInt('userProfileMode', _app.profileMode.value);
-        print('Sign in as ${userCredentials.user.email}');
+        print('Sign in as ${credentials.user.email}');
         _app.message(title: 'Success!', body: 'User logged in successfully.');
         Get.offAllNamed("/Home");
         return true;
       });
     } catch (e) {
+      print('Facebook Login Exception: $e');
       _app.message(
-          title: 'Sign in Failed',
-          body: 'Plaese check your internet connection and try again later.');
-      printError(info: e.printError());
-      return false;
+          title: 'Sign in Error:',
+          body: 'Plaese check your internet connection and try again later');
+      return null;
     }
   }
 
-// signin with google
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-    // Create a new credential
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+  Future<UserCredential> signInWithFacebook() async {
+    try {
+      if (GetPlatform.isAndroid) {
+        // Trigger the sign-in flow
+        var result = await FacebookAuth.instance.login();
+        // Create a credential from the access token
+        final facebookAuthCredential =
+            FacebookAuthProvider.credential(result.accessToken.token);
+        // Once signed in, return the UserCredentials
+        return await FirebaseAuth.instance
+            .signInWithCredential(facebookAuthCredential);
+      } else if (GetPlatform.isWeb) {
+        // Create a new provider
+        FacebookAuthProvider facebookProvider = FacebookAuthProvider();
+        facebookProvider.addScope('email');
+        facebookProvider.setCustomParameters({
+          'display': 'popup',
+        });
+        // Once signed in, return the UserCredential
+        return await FirebaseAuth.instance.signInWithPopup(facebookProvider);
+        // Or use signInWithRedirect
+        // return await FirebaseAuth.instance.signInWithRedirect(facebookProvider);
+      }
+      return null;
+    } catch (e) {
+      print('Facebook Credentials Exception: $e');
+      return null;
+    }
   }
 
-  // for logging out
-  Future userSignOut() async {
+  Future loggoutFacebookUser() async {
     try {
-      FirebaseAuth.instance.signOut().then((value) async {
-        GoogleSignIn().signOut();
+      FirebaseAuth.instance.signOut().then((signOut) async {
+        FacebookAuth.instance.logOut();
         SharedPreferences prefs = await SharedPreferences.getInstance();
         _app.isUserLogin.value = false;
         _app.profileMode.value = 0;
@@ -78,19 +91,17 @@ class GoogleSigninController extends GetxController {
         return true;
       });
     } catch (e) {
-      _app.message(
-          title: 'Sign out Error',
+      print('Facebook User Logout Exception: $e');
+       _app.message(
+          title: 'Sign out Error:',
           body: 'Plaese check your internet connection and try again later');
-      printError(info: e.toString());
-      return false;
     }
   }
 
-  // for deleting using account if he/she  want too
-  Future deleteAccount() async {
+  Future deleteFacebookUser() async {
     try {
       await FirebaseAuth.instance.currentUser.delete().then((value) async {
-        await GoogleSignIn().disconnect();
+        // await FacebookAuth.instance.disconnect();
         SharedPreferences prefs = await SharedPreferences.getInstance();
         _app.isUserLogin.value = false;
         _app.profileMode.value = 2;
@@ -114,7 +125,7 @@ class GoogleSigninController extends GetxController {
       _app.message(
           title: 'Account Deletion Error:',
           body: 'Plaese check your internet connection and try again later');
-      print("User Deleted Exception:" + e.toString());
+      print("Facebook User Deleted Exception:" + e.toString());
       return false;
     }
   }

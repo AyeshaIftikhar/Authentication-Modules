@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_codes/Controller/app_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Controller/app_controller.dart';
 
 class CloudFirestoreService {
   final AppController _app = Get.find();
@@ -56,7 +56,7 @@ class CloudFirestoreService {
   Future updateDeleteUrl({@required String docid}) async {
     try {
       await _app.appUserRef.doc(docid).update({
-        'ImageUrl': '',
+        'ImageUrl': 'https://i.imgur.com/p3i6j7o.png',
       }).then((value) async {
         _app.photoUrl.value = '';
         SharedPreferences prefs = await SharedPreferences.getInstance();
