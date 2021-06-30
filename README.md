@@ -1,8 +1,23 @@
 # Flutter Codes
 
-[![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/#/)
+[![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/#/) [![Documentation](https://img.shields.io/badge/Documentation-00FFFF?logo=GitHub-FFFFFF)](https://www.ayeshaiftikhar.io/Flutter-Codes) [![Detailed Documentation](https://img.shields.io/badge/Detailed_Documentation-00FFFF?logo=GitHub-ffffff)]()  
 ## Quick Links 
-[![Purpose](https://img.shields.io/badge/FLUTTER-Purpose_of_the_Repository-64DD17)](###Purpose-of-the-Repository)
+[![Purpose](https://img.shields.io/badge/FLUTTER-Purpose_of_the_Repository-00FFFF)](#Purpose-of-the-Repository) 
+
+[![Generic Packages](https://img.shields.io/badge/FLUTTER-Generic_Packages_being_User-00FFFF)](#Some-Generic-Flutter-Packages,-I-have-Used) 
+
+[![Splash Screen](https://img.shields.io/badge/FLUTTER-Animated_Splash_Screen-00FFFF)](#Animated-Splash-Screen) 
+
+[![Firebase](https://img.shields.io/badge/FLUTTER-Firebase-00FFFF)](#Firebase) 
+
+[![Cloud Firestore](https://img.shields.io/badge/FLUTTER-Cloud_Firestore-00FFFF)](#Cloud-Firestore) [![Collection](https://img.shields.io/badge/Cloud_Firestore-Collection-00FFFF)](#Collection) [![Documents](https://img.shields.io/badge/Cloud_Firestore-Documents-00FFFF)](#Documents) [![Setting up cloud firestore](https://img.shields.io/badge/Cloud_Firestore-Setup-00FFFF)](#Setting-up-Cloud-Firestore) 
+
+[![Firebase Storage](https://img.shields.io/badge/FLUTTER-Firebase_Storage-00FFFF)](#Firebase-Storage) [![Features](https://img.shields.io/badge/Firebase_Storage-Features-00FFFF)](#Features-of-Firebase-Storage:) [![Configuration](https://img.shields.io/badge/Firebase_Storage-Configuration-00FFFF)](#Configure-the-Firebase-Storage-in-your-project) 
+
+[![Authentication](https://img.shields.io/badge/FLUTTER-Firebase_Authentication-00FFFF)](#Authentication-Modules) 
+
+[![Google Authentication](https://img.shields.io/badge/Firebase-Google_Authentication-00FFFF)](#Google-Authentication)  
+
 
 ### Purpose of this Repository
 
@@ -187,12 +202,10 @@ I have used _Image Picker_ package for getting image on Android and iOs and _Fil
 
 Add the image picker and file picker package along with permission handler package in `pubspec.yaml`.
 ```
-    image_picker:
-    permission_handler:
-    file_picker:
+    image_picker: 
 ```
 
-We are using permission handler package because image picker package does not handle permissions by itself. Read more about image picker package [here](https://pub.dev/packages/image_picker) and file picker package [here](https://pub.dev/packages/file_picker) and permission handler package [here](https://pub.dev/packages/permission_handler). 
+We are using permission handler package because image picker package does not handle permissions by itself. Read more about image picker package [here](https://pub.dev/packages/image_picker). 
 
 ## Authentication Modules
 
