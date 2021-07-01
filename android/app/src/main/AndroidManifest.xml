@@ -37,8 +37,8 @@
 		
 		</activity>
 		<provider android:authorities="com.facebook.app.FacebookContentProvider945416459634045"
-          android:name="com.facebook.FacebookContentProvider"
-          android:exported="true" />
+        android:name="com.facebook.FacebookContentProvider"
+        android:exported="true" />
 		
 		
 		<meta-data android:name="flutterEmbedding" android:value="2" />
