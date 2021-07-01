@@ -1,10 +1,10 @@
 # Flutter Codes
 
-[![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/#/) [![Documentation](https://img.shields.io/badge/Documentation-00FFFF?logo=Github&logoColor=FFFFFF)](https://www.ayeshaiftikhar.github.io/Flutter-Codes) [![Detailed Documentation](https://img.shields.io/badge/Detailed_Documentation-00FFFF?logo=Github&logoColor=ffffff)]()  
+[![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/) [![Documentation](https://img.shields.io/badge/Documentation-00FFFF?logo=Github&logoColor=FFFFFF)](https://ayeshaiftikhar.me/Flutter-Codes/) [![Detailed Documentation](https://img.shields.io/badge/Detailed_Documentation-00FFFF?logo=Github&logoColor=ffffff)](https://gist.github.com/AyeshaIftikhar/14dac69ca4c3b9d126c70d0dd02bea2f)  
 ## Quick Links 
 [![Purpose](https://img.shields.io/badge/FLUTTER-Purpose_of_the_Repository-00FFFF)](#purpose-of-the-repository) 
 
-[![Generic Packages](https://img.shields.io/badge/FLUTTER-Generic_Packages_being_Used-00FFFF)](#some-generic-flutter-packages,-i-have-used) 
+[![Generic Packages](https://img.shields.io/badge/FLUTTER-Generic_Packages_being_Used-00FFFF)](#some-generic-flutter-packages) 
 
 [![Splash Screen](https://img.shields.io/badge/FLUTTER-Animated_Splash_Screen-00FFFF)](#animated-splash-screen) 
 
@@ -18,12 +18,14 @@
 
 [![Google Authentication](https://img.shields.io/badge/Firebase-Google_Authentication-00FFFF)](#google-authentication)  [![Google Authentication Setup](https://img.shields.io/badge/Firebase-Google_Authentication_Setup-00FFFF)](#guidelines-for-google-authentication-setup) 
 
+[![Facebook Authentication](https://img.shields.io/badge/Firebase-Facebook_Authentication-00FFFF)](#facebook-authentication) [![Facebook Developer Consoler Setup](https://img.shields.io/badge/Firebase-Facebook_Developer_Console_App_Setup-00FFFF)](#setup-application-on-facebook-developer-console) [![Enable Facebook Authentication](https://img.shields.io/badge/Firebase-Enable_Facebook_Authentication-00FFFF)](#enable-facebook-authentication)
+
 
 ### Purpose of this Repository
 
 I have made this repository for reusing the most commonly used code modules. As a developer, I know the headache of re-doing the same piece of code again and again and sometimes, you just forgot about one step and here you go, your code stops working with a long list of errors. So, here is the easiest solution I think of to make this repository and add all the working codes in it, to get it whenever they are needed.
 
-#### Some Generic Flutter Packages, I have used
+#### Some Generic Flutter Packages
 - I have used __Getx__ for _State Management_, you can read more about this dependency [here](https://pub.dev/packages/get). Getx just made the state management much easy as compared to other state management techniques __e.g.__ _Bloc and Provider_, etc. To use this package just add the following line in youe `pubspec.yaml` under `dependencies:`
 ```
 dependencies:
@@ -361,10 +363,123 @@ You are all set-up, just place the following two commands in your __index.html__
   
   [![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes)
   
+## Facebook Authentication
+Facebook authentication is also one of the common authentication methods used for uer sign up into an application by following minimum steps on user side, but for a developer you have to follow some steps to make it work properly in your application. The neccessary steps are mentioned below: 
+- First, you have to setup an application on _Facebook Developers Console._ You can following the steps given in there documentation [here](https://developers.facebook.com/docs/).  
+- Then, you need to  enable facebook auth provider in your [Firebase Console](https://console.firebase.google.com/u/0/project/_/authentication/providers) by setting up your facebook app id and secret.
+- After that we will add the _[flutter_facebook_auth](https://pub.dev/packages/flutter_facebook_auth)_ package into `pubspec.yaml` file.
+```
+	flutter_facebook_auth: 
+```
+
+### Setup Application on Facebook Developer Console
+- Create an application on facebook developer console if you do not have one before on this [link](https://developers.facebook.com/apps/)
+
+![Add app](https://i.imgur.com/UYpMKqQ.png)
+
+#### Android Setup
+- Skip the step two (Download Facebook App) & three (Integrate Facebook SDK) in the documentation.
+- Edit your resources by creating a `strings.xml` file in _**/android/app/src/main/src/values/strings.xml**_ and add the following configs there:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Flutter Codes</string>
+    <string name="facebook_app_id">your_facebook_app_id</string>
+    <string name="fb_login_protocol_scheme">fbyour_facebook_app_id</string>
+</resources>
+```
+- Add the following permission in `AndroidManifest.xml`
+```
+<uses-permission android:name="android.permission.INTERNET"/>
+
+```
+- Now add the following config in you `AndroidManifest.xml` file.
+```
+<!-- Facebook Sign in -->
+<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id" />		
+<activity 
+	  android:name="com.facebook.FacebookActivity" 
+	  android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" 
+	  android:label="@string/app_name" 
+/>
+<activity android:name="com.facebook.CustomTabActivity" android:exported="true">
+	<intent-filter>
+		<action android:name="android.intent.action.VIEW" />
+		<category android:name="android.intent.category.DEFAULT" />
+		<category android:name="android.intent.category.BROWSABLE" />
+		<data android:scheme="@string/fb_login_protocol_scheme" />
+	</intent-filter>	
+</activity>
+<!-- For fetching photo or video -->
+<provider 
+	 android:authorities="com.facebook.app.FacebookContentProvider945416459634045"
+         android:name="com.facebook.FacebookContentProvider"
+         android:exported="true"
+/>
+```
+- Now associalte your package name and default class of your app
+
+![Package Name](https://i.imgur.com/tnXZm2c.png)
+ 
+- Now provide development and release key hashes. You need to follow the instructions mentioned here to get the key hashes [https://developers.facebook.com/docs/facebook-login/android?locale=en_US#6--provide-the-development-and-release-key-hashes-for-your-app](https://developers.facebook.com/docs/facebook-login/android?locale=en_US#6--provide-the-development-and-release-key-hashes-for-your-app)
+
+![key hashes](https://i.imgur.com/viRthgD.png)
+
+**Note:** if you find it difficult to get the hash  key by following the instructions. You can convert the SHA1 into your hash key on this [Hex to Base64 Converter](http://tomeko.net/online_tools/hex_to_base64.php). You just need to put your SHA1 key and it will generate the hash key. 
+
+![hash key converter](https://i.imgur.com/4Rb73fX.png)
+
+
+#### Website Setup
+- You need to add the facebook javascript sdk into your `index.html` file.
+```
+<!-- ADD THIS SCRIPT -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+```
+- In `main.dart`, add the following code but before `runapp()`
+```dart
+if (kIsWeb) {
+    // initialiaze the facebook javascript SDK
+    FacebookAuth.i.webInitialize(
+      appId: "YOUR APP_ID",
+      cookie: true,
+      xfbml: true,
+      version: "v1.0",
+    );
+  }
+```
+- Apart from this, you need to add your website url too. 
+
+	![Website URL](https://i.imgur.com/cCWl0rc.png)
+
+- Also you need to add all the domains and subdomain related to your application. To add these go to your app's** _settings>basic_**
+
+	![App Domains](https://i.imgur.com/Tb3aEpZ.png)
+
+_**Note:**_ You need to add domain names without `http/https`. And you can also add a logo of your application and the privacy policy and terms of services.
+
+[![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes) 
+
+### Enable Facebook Authentication 
+- In your [Firebase Console](https://console.firebase.google.com/), go to _**Authentications>Sign-in Methods**_ and enable facebook sign in by providing the Facebook Application ID and Secret Key and it will provide a `OAuth Redirect URI`.
+	- On the other note, you will find your facebook app id and secret in your app's setting on the mentioned link [https://developers.facebook.com/apps/your_app_id/settings/basic/](https://developers.facebook.com/apps/your_app_id/settings/basic/)
+
+	![id and secret](https://i.imgur.com/5Fg1xda.png)
+	
+	- Add these credentials in your sign-in method to enable it.
+	
+	![Enable Facebook Sign in](https://imgur.com/lFjqTFg.png) 
+
+- After getting the _OAuth Redirect URI_, we will add that URI into our application. By following the path at here [https://developers.facebook.com/apps/ypur_app_id/fb-login/settings/](https://developers.facebook.com/apps/your_app_id/fb-login/settings/)
+
+	![oauth redirect uri](https://i.imgur.com/lIUQSt5.png)
+ 
+[![TOP](https://img.shields.io/badge/Goto-Top-000000)](#flutter-codes) 
+ 
 ### Application Screenshots
  
   ![Splash Screen](https://i.imgur.com/ysNRzZC.png)
-  ![Login Screen](https://i.imgur.com/bSYBvo9.png) ![User Profile](https://i.imgur.com/ZIBeDvb.png)
+  ![Login Screen](https://i.imgur.com/i8hgGKl.png) ![User Profile](https://i.imgur.com/piNO4VC.png)
   ![File Picker](https://i.imgur.com/nv18Chg.png) 
  
   
