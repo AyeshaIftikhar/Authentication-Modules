@@ -1,6 +1,6 @@
 # Flutter Codes
 
-[![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/) [![Documentation](https://img.shields.io/badge/Documentation-00FFFF?logo=Github&logoColor=FFFFFF)](https://ayeshaiftikhar.me/Flutter-Codes/) [![Detailed Documentation](https://img.shields.io/badge/Detailed_Documentation-00FFFF?logo=Github&logoColor=ffffff)](https://gist.github.com/AyeshaIftikhar/14dac69ca4c3b9d126c70d0dd02bea2f)  
+[![Website Demo](https://img.shields.io/badge/Website-00FFFF?logo=google-chrome&logoColor=ffffff)](https://authentication-demo-a1eb6.web.app/) [![Documentation](https://img.shields.io/badge/Documentation-00FFFF?logo=Github&logoColor=FFFFFF)](https://https://ayeshaiftikhar.github.io//Flutter-Codes/) [![Detailed Documentation](https://img.shields.io/badge/Detailed_Documentation-00FFFF?logo=Github&logoColor=ffffff)](https://gist.github.com/AyeshaIftikhar/14dac69ca4c3b9d126c70d0dd02bea2f)  
 ## Quick Links 
 [![Purpose](https://img.shields.io/badge/FLUTTER-Purpose_of_the_Repository-00FFFF)](#purpose-of-the-repository) 
 
