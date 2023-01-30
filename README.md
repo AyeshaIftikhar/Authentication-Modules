@@ -20,6 +20,8 @@
 
 [![Facebook Authentication](https://img.shields.io/badge/Firebase-Facebook_Authentication-00FFFF)](#facebook-authentication) [![Facebook Developer Consoler Setup](https://img.shields.io/badge/Firebase-Facebook_Developer_Console_App_Setup-00FFFF)](#setup-application-on-facebook-developer-console) [![Enable Facebook Authentication](https://img.shields.io/badge/Firebase-Enable_Facebook_Authentication-00FFFF)](#enable-facebook-authentication)
 
+[![One-to-One Chatting](https://img.shields.io/badge/Firebase-One_to_One_Chatting-00FFFF)]() [![One-to-One Calls](https://img.shields.io/badge/Firebase-One_to_One_Calls-00FFFF)]()
+
 
 ### Purpose of this Repository
 
